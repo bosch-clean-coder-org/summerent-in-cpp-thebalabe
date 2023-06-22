@@ -2,6 +2,8 @@
 
 #include "BatteryMonitor.h"
 #include "test/catch.hpp"
+#undef MINSIGSTKSZ
+#define MINSIGSTKSZ 16384
 
 TEST_CASE("infers the breach according to limits for PASSIVE_COOLING with Alert to controller")
 {
