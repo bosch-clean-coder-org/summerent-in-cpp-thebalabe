@@ -34,6 +34,7 @@ private:
     std::unique_ptr<AlertManager> alertManager = std::make_unique<AlertManager>();
 
     BreachType classifyTemperatureBreach(CoolingType coolingType, double temperatureInC);
+    sTempData getTempertureData(CoolingType coolingType, double temperatureInC);
 
     std::vector<BatteryTemperatureConfigurations> battTemperatureConfig = {
         // CoolingType       //lowerlimit    //upperlimit
