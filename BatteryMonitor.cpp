@@ -14,21 +14,27 @@ BreachType BatteryMonitor::inferBreach(sTempData data)
     return new_type;
 }
 
+sTempData BatteryMonitor::getTempertureData(CoolingType coolingType, double temperatureInC)
+{
+    sTempData data = {};
+    data.currentTemp = temperatureInC;
+    for (const auto& configData : battTemperatureConfig)
+    {
+        if (coolingType == configData.coolingType)
+        {
+            data.lowerLimit = configData.lowerLimit;
+            data.upperLimit = configData.upperLimit;
+            break;
+        }
+    }
+    return data;
+}
+
 BreachType BatteryMonitor::classifyTemperatureBreach(CoolingType coolingType, double temperatureInC)
 {
     if (INVALID != coolingTypeValidator(coolingType))
     {
-        sTempData data = {};
-        data.currentTemp = temperatureInC;
-        for (const auto& configData : battTemperatureConfig)
-        {
-            if (coolingType == configData.coolingType)
-            {
-                data.lowerLimit = configData.lowerLimit;
-                data.upperLimit = configData.upperLimit;
-                break;
-            }
-        }
+        sTempData data = getTempertureData(coolingType, temperatureInC);
         return inferBreach(data);
     }
     return INVALID;
